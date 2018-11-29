@@ -1,0 +1,35 @@
+note: tested on Windows 10
+
+run the following:
+
+pip3 install pybase64
+
+python3
+import pybase64
+print(pybase64.b64encode(b'username:password'))
+
+result will look something like this:
+b'VSERLS234KrasfJasfdDSFKJOIJ='
+
+and as such, your encoded authentication string is VSERLS234KrasfJasfdDSFKJOIJ=
+we will use this for the remainder of the example
+
+For cURL, the command will look like this:
+  curl -k -H "Authorization: Basic VSERLS234KrasfJasfdDSFKJOIJ=" https://servername.com:3780/api/3/assets
+
+
+Create a new Python file with the following lines:
+##start of python file
+
+import requests
+Auth = "VSERLS234KrasfJasfdDSFKJOIJ="
+
+URL = "https://servername.com:3780/api/3/assets"
+Results = requests.get(URL, headers={'Authorization': 'Basic {}'.format(Auth)}, verify=False)
+
+print(Results.content)
+
+##end of python file
+
+
+Use this as the starting point for your scripts. The script as-is isn't very good, but it let's you authenticate :D
